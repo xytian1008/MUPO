@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="All Roads Lead to Rome: Incentivizing Divergent Thinking in Vision-Language Models">
+  <meta name="description" content="We identify a fundamental behavioral distinction between RL and base VLMs: RL models engage in deeper yet narrow reasoning, while base models exhibit broader and more diverse thinking patterns. We show that GRPO is prone to diversity collapse and propose MUPO to incentivize divergent reasoning, achieving new state-of-the-art results.">
+  <meta name="keywords" content="Vision-Language Models, Multimodal Reasoning, Reinforcement Learning, GRPO, Diversity, MUPO">
+  <meta name="author" content="Xinyu Tian, Shu Zou, Zhaoyuan Yang, Mengqi He, Peter Tu, Jing Zhang">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>All Roads Lead to Rome: Incentivizing Divergent Thinking in Vision-Language Models</title>
+
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap&family=Google+Sans" rel="stylesheet">
+
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "All Roads Lead to Rome: Incentivizing Divergent Thinking in Vision-Language Models",
+    "description": "We identify diversity collapse in GRPO-trained VLMs and propose Multi-Group Policy Optimization (MUPO) to incentivize divergent reasoning across multiple solution strategies.",
+    "author": [
+      {"@type": "Person", "name": "Xinyu Tian", "affiliation": {"@type": "Organization", "name": "Australian National University"}},
+      {"@type": "Person", "name": "Shu Zou", "affiliation": {"@type": "Organization", "name": "Australian National University"}},
+      {"@type": "Person", "name": "Zhaoyuan Yang", "affiliation": {"@type": "Organization", "name": "GE Research"}},
+      {"@type": "Person", "name": "Mengqi He", "affiliation": {"@type": "Organization", "name": "Australian National University"}},
+      {"@type": "Person", "name": "Peter Tu", "affiliation": {"@type": "Organization", "name": "GE Research"}},
+      {"@type": "Person", "name": "Jing Zhang", "affiliation": {"@type": "Organization", "name": "Australian National University"}}
+    ],
+    "datePublished": "2026-04-07",
+    "publisher": {"@type": "Organization", "name": "CVPR 2026"},
+    "keywords": ["Vision-Language Models", "Reinforcement Learning", "Divergent Thinking", "GRPO", "Reasoning Diversity"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-2 publication-title">All Roads Lead to Rome: Incentivizing Divergent Thinking in Vision-Language Models</h1>
+            <p class="is-size-4" style="color: red; font-weight: bold; font-size: 1.35rem !important;">CVPR 2026 Highlight ⭐</p>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://xytian1008.github.io/" target="_blank">Xinyu Tian<sup>†</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=0-peT50AAAAJ&hl=en" target="_blank">Shu Zou<sup>†‡</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=qxa04lIAAAAJ&hl=en" target="_blank">Zhaoyuan Yang<sup>*</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=Hf6PCLIAAAAJ&hl=en" target="_blank">Mengqi He<sup>†</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=dq3YdgcAAAAJ&hl=en" target="_blank">Peter Tu<sup>*</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=Qa1DMv8AAAAJ&hl=en" target="_blank">Jing Zhang<sup>†</sup></a></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>†</sup>Australian National University &nbsp;&nbsp;&nbsp;&nbsp;<sup>‡</sup>Shanghai AI Lab &nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup>GE Research</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2604.00479" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2604.00479" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/xytian1008/MUPO" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/xytian1008/MUPO-Thinker-7B" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-robot"></i>
+                  </span>
+                  <span>Model</span>
+                </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/xytian1008/MUPO-Thinker-train36k" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-database"></i>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+                </span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Paper abstract -->
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent studies have demonstrated that Reinforcement Learning (RL), notably Group Relative Policy Optimization (GRPO), can intrinsically elicit and enhance the reasoning capabilities of Vision-Language Models (VLMs). However, despite the promise, the underlying mechanisms that drive the effectiveness of RL models as well as their limitations remain underexplored. In this paper, we highlight a fundamental behavioral distinction between RL and base models, where the former engages in <b>deeper yet narrow reasoning</b>, while base models, despite less refined along individual path, exhibit <b>broader and more diverse thinking patterns</b>. Through further analysis of training dynamics, we show that GRPO is prone to <b>diversity collapse</b>, causing models to prematurely converge to a limited subset of reasoning strategies while discarding the majority of potential alternatives, leading to local optima and poor scalability. To address this, we propose <b>Multi-Group Policy Optimization (MUPO)</b>, a simple yet effective approach designed to incentivize divergent thinking across multiple solutions, and demonstrate its effectiveness on established benchmarks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <br><br><br>
+        <h2 class="title is-23">Do RL Models Truly Outperform Their Base Counterparts?</h2>
+        <br>
+        <div class="item is-vcentered">
+          <img src="static/figures/accuracy.png" alt="Acc@k Analysis" />
+        </div>
+        <br>
+        <div class="content has-text-justified">
+          <p>
+            A common belief is that RL-trained models are strictly superior to their base counterparts. But is this always true? To investigate this, we go beyond the standard single-attempt evaluation and introduce <b>acc@k</b>: a model is considered successful if at least one of <i>k</i> sampled responses leads to the correct answer. This relaxed metric reveals a surprising contrast:
+          </p>
+        </div>
+        <div class="content has-text-justified">
+          <ol>
+            <li>
+              <b>RL models dive depth, base models seek breadth</b>: When limited to a single attempt (<i>k</i>=1), RL models markedly outperform their base counterparts, reflecting sophisticated reasoning along individual trajectories. However, as <i>k</i> increases, base models succeed in solving substantially more problems, while the gains of RL models remain marginal.
+            </li>
+            <li>
+              <b>Base models leverage diverse strategies where RL fails</b>: In cases where RL models cannot find the answer despite multiple attempts, base models often succeed by approaching the problem from alternative angles such as using estimation or elimination instead of brute-force enumeration. These strategies are systematically absent from RL model outputs.
+            </li>
+            <li>
+              <b>Diversity correlates strongly with success</b>: Across all benchmarks, there is a strong positive correlation between reasoning diversity and acc@4. Tackling problems through varied strategies, rather than repeating a single mode, dramatically increases the odds of reaching the correct answer.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <br><br>
+        <h2 class="title is-23">Root Cause: Diversity Collapse in GRPO Training</h2>
+        <br>
+        <div class="item is-vcentered">
+          <img src="static/figures/diversity.png" alt="Diversity Collapse" />
+        </div>
+        <br>
+        <div class="content has-text-justified">
+          <p>
+            To understand why RL models lose their diversity, we track reasoning diversity throughout the GRPO training process. The results are striking: <b>diversity collapses sharply within the first 20 training steps</b>, before the model has even seen most of the training data. This premature convergence has two critical consequences:
+          </p>
+        </div>
+        <div class="content has-text-justified">
+          <ul>
+            <li>
+              <b>Exploitation over exploration</b>: The model latches onto a dominant reasoning strategy early and spends the vast majority of training refining it, never recovering the discarded alternatives. This renders the optimization susceptible to local optima.
+            </li>
+            <li>
+              <b>Limited test-time scalability</b>: Because the model's output distribution is concentrated in a narrow region of reasoning space, sampling more responses provides diminishing returns, and parallel scaling simply draws from the same collapsed mode.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <br><br>
+        <h2 class="title is-23">Our Solution: Multi-Group Policy Optimization (MUPO)</h2>
+        <br>
+        <div class="item is-vcentered">
+          <img src="static/figures/method.png" alt="MUPO Method" />
+        </div>
+        <br>
+        <div class="content has-text-justified">
+          <p>
+            We propose <b>Multi-Group Policy Optimization (MUPO)</b>, a drop-in replacement for GRPO designed to preserve divergent thinking throughout RL training.
+          </p>
+        </div>
+        <div class="content has-text-justified">
+          <ol>
+            <li>
+              <b>Embedding-based Group Partitioning</b>: At each training step, the N sampled responses are embedded and partitioned into K groups, where each group captures a semantically distinct reasoning strategy. 
+            </li>
+            <li>
+              <b>Localized Advantage Estimation</b>: Advantages are normalized <i>within</i> each group rather than globally. This prevents a high-reward dominant strategy from suppressing the relative advantage of correct responses in less common groups.
+            </li>
+            <li>
+              <b>Diversity Reward with Cosine Annealing</b>: A diversity reward encourages inter-group separation by rewarding responses whose reasoning embeddings are distant from those in other groups. 
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <br><br>
+        <h2 class="title is-23">Experimental Results</h2>
+        <br>
+        <div class="item is-vcentered">
+          <img src="static/figures/results.png" alt="Main Results" />
+        </div>
+        <div class="content has-text-justified">
+          <ul>
+            <li>
+              <b>MUPO establishes a new state of the art</b>: MUPO-Thinker-7B achieves an average acc@1 improvement of <b>+2.5%</b> (49.1% → 51.6%) on mathematical benchmarks and <b>+2.3%</b> (63.3% → 65.6%) on general-purpose benchmarks over previous best results. MUPO-Thinker-3B similarly surpasses all baselines at its scale.
+            </li>
+            <li>
+              <b>MUPO exhibits dramatically stronger test-time scaling</b>: Under parallel sampling (acc@4), MUPO-Thinker-7B outperforms existing strong RL baselines by <b>+6.0%</b> on mathematical and <b>+6.2%</b> on general-purpose benchmarks. This gap widens further as <i>k</i> increases, confirming that divergent training directly unlocks parallel scaling capabilities that GRPO forfeits.
+            </li>
+            <li>
+              <b>MUPO-Thinker-3B punches above its weight</b>: Under multi-sample evaluation, the 3B model achieves performance comparable to several strong 7B baselines — demonstrating that reasoning diversity is a highly parameter-efficient axis for improvement.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--BibTex citation -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="bibtex-header">
+      <h2 class="title">BibTeX</h2>
+      <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+        <i class="fas fa-copy"></i>
+        <span class="copy-text">Copy</span>
+      </button>
+    </div>
+    <pre id="bibtex-code"><code>@inproceedings{tian2026allroads,
+  title={All Roads Lead to Rome: Incentivizing Divergent Thinking in Vision-Language Models},
+  author={Tian, Xinyu and Zou, Shu and Yang, Zhaoyuan and He, Mengqi and Tu, Peter and Zhang, Jing},
+  booktitle={CVPR},
+  year={2026}
+}</code></pre>
+  </div>
+</section>
+<!--End BibTex citation -->
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</main>
+</body>
+</html>
